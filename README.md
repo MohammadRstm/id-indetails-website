@@ -147,7 +147,7 @@ The contact email and the favicon are `null` until they are set in the dashboard
 
 `VITE_API_BASE_URL` (see `.env.example`, read at build time) sets where the API is; by default it is `/api/public/website` on the site's own origin. In production the container's nginx forwards that path to the API.
 
-In development, `npm run dev` (and `npm run preview`) forward `/api/public/website` to the live site, `https://id-indetails.com`, so you work with the real projects (`vite.config.ts`). `DEV_API_TARGET` in `.env` points it elsewhere, such as a local API at `https://localhost:7187` (the API's "https" launch profile, whose development certificate isn't checked) or `http://localhost:5164` (its "http" profile). With the default, a message sent from the local contact form reaches the company's real inbox.
+In development, `npm run dev` (and `npm run preview`) forward `/api/public/website` to the local API at `https://localhost:7187` (the API's "https" launch profile, whose development certificate isn't checked), so nothing done locally touches the live site (`vite.config.ts`). Start the API first, or the pages say the projects couldn't load. `DEV_API_TARGET` in `.env` points it elsewhere, such as `http://localhost:5164` (the API's "http" profile) or the live site, `https://id-indetails.com`, to see the real projects; a message sent from the local contact form then reaches the company's real inbox.
 
 ## Hosting
 
