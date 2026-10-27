@@ -60,8 +60,12 @@ The GitHub remote still has its old name (`id-indetails-earth-portfolio`) and re
 - **`npm run typecheck`, `npm run lint`, `npm test`:** `tsc -b`, ESLint and Vitest. Tests cover pure logic only; there are no component or e2e tests.
 - **`npm run build`:** `tsc -b && vite build`. The globe chunk is about 750 kB, so Vite's size warning is expected.
 
-**One core, low priority:** the development laptop shuts down under load. Run checks one at a time, only for what
-you touched.
+- **Ask before running builds or tests.** The user works from two machines:
+  - a laptop that shuts down under load;
+  - a desktop that comfortably runs on several cores.
+
+  Before the first build or test run in a session, ask whether to run on **one core at low priority** (the laptop) or normally (the desktop). Keep to the answer for the rest of the session.
+- **On the laptop:** run checks one at a time, at low priority, only for what you touched.
 
 ## How it ships
 
@@ -80,6 +84,13 @@ you touched.
   - it sets a strict CSP and security headers.
   - **A new external origin** (font, script, image, iframe) must be added to the CSP, or it is blocked.
   - The headers are repeated in each `location` that adds its own `add_header`. Keep that when editing.
+
+## Keeping this file current
+
+This file is how every new session learns the project, so keep it true:
+- **When your work changes something written here, propose an edit to this file.** That includes a rule, a workflow, a file or folder, a command, or a business rule.
+- **When the user tells you a new rule or preference, also propose an edit** so later sessions follow it.
+- **Ask the user's permission first, every time.** Show the exact change and wait for a yes. This applies above all to the rules sections. Never change this file on your own.
 
 ## Conventions and gotchas
 
