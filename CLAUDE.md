@@ -16,11 +16,14 @@ The site has **no content of its own**. Everything comes from the company's inte
 
 ### The repositories
 
+The checkouts sit under `C:\Users\masst\` on the laptop and `C:\Users\mohammadrstm\` on the desktop:
+
 | Repo | Local checkout | What it is |
 |---|---|---|
-| Website (this one) | `C:\Users\masst\Desktop\id-indetails-website` (`master`) | Vite + React 19 + TypeScript SPA, three.js globe |
-| API | `C:\Users\masst\source\repos\ID-Indetails` (`master`) | ASP.NET Core .NET 10. `docs/website.md` there is the contract this site depends on. |
-| Client | `C:\Users\masst\Desktop\Ident-Internal-Management-System-client` (`main`) | The internal app, where admins edit what this site shows. |
+| Website (this one) | `Desktop\id-indetails-website` (`master`) | Vite + React 19 + TypeScript SPA, three.js globe |
+| API | `source\repos\ID-Indetails` (`master`) | ASP.NET Core .NET 10. `docs/website.md` there is the contract this site depends on. |
+| Client | `Desktop\Ident-Internal-Management-System-client` (`main`) | The internal app, where admins edit what this site shows. |
+| Mobile app | `Desktop\ID-Indetails-mobile` (`main`) | The phone app (Expo + React Native), another client of the API. |
 
 The GitHub remote still has its old name (`id-indetails-earth-portfolio`) and redirects to `id-indetails-website`.
 
