@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type KeyboardEvent, type MouseEvent, type PointerEvent, type SyntheticEvent } from 'react';
 import type { ProjectImage } from '../data/project';
 import { layoutMasonry, PLACEHOLDER_RATIO, stepIndex } from '../lib/gallery';
+import { FULL_SIZE, sizedSrc } from '../lib/pictureSizes';
 import { ChevronLeftIcon, ChevronRightIcon, CloseIcon } from './icons';
 import { LoadedImage } from './LoadedImage';
 
@@ -66,9 +67,10 @@ function PhotoGrid({ images, onOpen }: PhotoGridProps) {
     };
   }, []);
 
+  // The shape comes from the photo's preview; the sharper copy that follows keeps the place it was given.
   const handleLoad = (src: string, event: SyntheticEvent<HTMLImageElement>) => {
     const { naturalWidth, naturalHeight } = event.currentTarget;
-    setRatios((current) => ({ ...current, [src]: naturalWidth / naturalHeight }));
+    setRatios((current) => (current[src] ? current : { ...current, [src]: naturalWidth / naturalHeight }));
   };
 
   const layout =
@@ -125,7 +127,7 @@ export function PhotoViewer({ images, start, title, onClose }: PhotoViewerProps)
   // Keep the current small photo in view, and fetch the neighbours so stepping to them is instant.
   useEffect(() => {
     thumbsRef.current?.querySelector('[aria-current="true"]')?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
-    for (const by of [-1, 1]) new Image().src = images[stepIndex(index, by, count)].src;
+    for (const by of [-1, 1]) new Image().src = sizedSrc(images[stepIndex(index, by, count)].src, FULL_SIZE);
   }, [index, images, count]);
 
   const step = (by: number) => setIndex((current) => stepIndex(current, by, count));
@@ -169,7 +171,7 @@ export function PhotoViewer({ images, start, title, onClose }: PhotoViewerProps)
       </div>
 
       <div className="viewer__stage" onPointerDown={handlePointerDown} onPointerUp={handlePointerUp} onClick={handleStageClick}>
-        <LoadedImage key={image.src} className="viewer__image" src={image.src} alt={image.alt} decoding="async" draggable={false} />
+        <LoadedImage className="viewer__image" src={image.src} size={FULL_SIZE} alt={image.alt} decoding="async" draggable={false} />
         {count > 1 && (
           <>
             <button type="button" className="icon-button viewer__step viewer__step--previous" aria-label="Previous photo" onClick={() => step(-1)}>
@@ -193,7 +195,7 @@ export function PhotoViewer({ images, start, title, onClose }: PhotoViewerProps)
                 aria-current={itemIndex === index ? 'true' : undefined}
                 onClick={() => setIndex(itemIndex)}
               >
-                <img src={item.src} alt="" loading="lazy" decoding="async" draggable={false} />
+                <LoadedImage src={item.src} alt="" loading="lazy" decoding="async" draggable={false} />
               </button>
             </li>
           ))}

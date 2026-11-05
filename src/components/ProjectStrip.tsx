@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState, type PointerEvent } from 'react';
 import type { Project } from '../data/project';
 import { smoothDamp } from '../globe/GlobeController';
+import { LoadedImage } from './LoadedImage';
 
 export type StripAxis = 'x' | 'y';
 
@@ -366,7 +367,7 @@ export function ProjectStrip({
             tabIndex={-1}
             onClick={() => handleOpen(slot)}
           >
-            <img src={project.thumbnail} alt="" draggable={false} decoding="async" />
+            <LoadedImage src={project.thumbnail} alt="" draggable={false} decoding="async" />
           </button>
         );
       })}
