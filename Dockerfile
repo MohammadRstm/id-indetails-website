@@ -26,6 +26,10 @@ ENV VITE_GA_MEASUREMENT_ID=${VITE_GA_MEASUREMENT_ID}
 RUN npm run build
 
 FROM nginxinc/nginx-unprivileged:stable-alpine AS runtime
+# The base image can trail Alpine's security fixes by days: take them now, then go back to its unprivileged user.
+USER root
+RUN apk upgrade --no-cache
+USER 101
 COPY deploy/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/dist /usr/share/nginx/html
 EXPOSE 8080
