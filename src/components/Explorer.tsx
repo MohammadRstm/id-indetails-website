@@ -5,6 +5,7 @@ import { loadGlobeStage, siteGlobeQuality, type GlobeStageModule } from '../glob
 import { useMediaQuery, usePrefersReducedMotion } from '../hooks/useMediaQuery';
 import { conveyorProjects } from '../lib/conveyor';
 import { groupByLocation } from '../lib/geo';
+import { PREVIEW_SIZE, sizedSrc } from '../lib/pictureSizes';
 import { HomeProjects } from './HomeProjects';
 import { ChevronLeftIcon, ChevronRightIcon } from './icons';
 import { MotionToggle } from './MotionToggle';
@@ -132,10 +133,10 @@ export function Explorer({ projects, offices, openSlug, active, onOpenProject, o
     return () => observer.disconnect();
   }, []);
 
-  // Warm the cache with the current project's opening photo, so its page appears complete.
+  // Warm the cache with the preview of the current project's opening photo, so its page appears complete at once.
   useEffect(() => {
     const image = new Image();
-    image.src = project.hero.src;
+    image.src = sizedSrc(project.hero.src, PREVIEW_SIZE);
   }, [project]);
 
   return (

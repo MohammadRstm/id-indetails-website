@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef } from 'react';
 import type { Project } from '../data/project';
+import { PREVIEW_SIZE, sizedSrc } from '../lib/pictureSizes';
 import { LoadedImage } from './LoadedImage';
 
 /** Waits for the strip, and the clicked photo with it, to fade out first. */
@@ -34,8 +35,8 @@ export function ProjectDock({ project, reducedMotion }: ProjectDockProps) {
   }, [reducedMotion]);
 
   return (
-    // The card's small photo sits underneath, already loaded, so the dock is never blank while the large one decodes.
-    <figure ref={dockRef} className="dock" style={{ backgroundImage: `url(${project.thumbnail})` }}>
+    // The card's preview sits underneath, already loaded, so the dock is never blank while its own photo loads.
+    <figure ref={dockRef} className="dock" style={{ backgroundImage: `url(${sizedSrc(project.thumbnail, PREVIEW_SIZE)})` }}>
       <LoadedImage src={project.hero.src} alt={project.hero.alt} decoding="async" />
     </figure>
   );

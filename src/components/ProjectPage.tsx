@@ -129,7 +129,7 @@ export function ProjectPage({ project, previous, next, onOpen, onContact }: Proj
           { label: 'Next project', item: next },
         ].map(({ label, item }) => (
           <button key={label} type="button" className="project-nav__link" onClick={() => onOpen(item.slug)}>
-            <img src={item.thumbnail} alt="" loading="lazy" decoding="async" />
+            <LoadedImage src={item.thumbnail} alt="" loading="lazy" decoding="async" />
             <span className="project-nav__label">{label}</span>
             <span className="project-nav__title">{item.title}</span>
             <span className="project-nav__place">{placeName(item.location)}</span>
