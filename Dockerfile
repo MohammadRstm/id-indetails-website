@@ -26,9 +26,12 @@ ENV VITE_GA_MEASUREMENT_ID=${VITE_GA_MEASUREMENT_ID}
 RUN npm run build
 
 FROM nginxinc/nginx-unprivileged:stable-alpine AS runtime
-# The base image can trail Alpine's security fixes by days: take them now, then go back to its unprivileged user.
+# The base image can trail Alpine's security fixes by days, so the packages with fixed high-severity CVEs are upgraded
+# until it ships them, as the internal app's image does: pcre2 (CVE-2026-103111), brotli-libs (CVE-2026-111497), curl and
+# libcurl (CVE-2026-92392), libexpat (CVE-2026-113351, CVE-2026-117610, CVE-2026-118370), zlib (CVE-2026-85091). Only
+# those: a full upgrade could replace nginx.org's nginx with Alpine's. Then back to the image's unprivileged user.
 USER root
-RUN apk upgrade --no-cache
+RUN apk upgrade --no-cache pcre2 brotli-libs curl libcurl libexpat zlib
 USER 101
 COPY deploy/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/dist /usr/share/nginx/html
